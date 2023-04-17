@@ -17,4 +17,9 @@ class Market
   def vendors_that_sell(item)
     @vendors.select{ |vendor| vendor.inventory.has_key?(item) && vendor.check_stock(item) != 0 }
   end
+
+  def sorted_item_list
+    stocks = @vendors.map { |vendor| vendor.inventory }
+    stocks.flat_map{ |stock| stock.keys.map { |key| key.name } }.uniq.sort
+  end
 end
