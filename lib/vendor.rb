@@ -15,4 +15,16 @@ class Vendor
   def stock(item, amount)
     if check_stock(item) == 0 then @inventory[item] = amount else @inventory[item] += amount end 
   end
+
+  def potential_revenue
+    revenues = 0.0
+    @inventory.each do |item, amount|
+      revenues += price_to_float(item.price) * amount.to_f
+    end
+    revenues
+  end
+
+  def price_to_float(price)
+    price.delete("$").to_f
+  end
 end
