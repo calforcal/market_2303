@@ -11,7 +11,7 @@ RSpec.describe Item do
 
   describe "#initialize" do
     it "can initialize" do
-      expect(@item.class).to eq(Item)
+      expect(@item1).to be_an_instance_of(Item)
     end
 
     it "can initialize with attributes" do
