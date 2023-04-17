@@ -15,6 +15,6 @@ class Market
   end
 
   def vendors_that_sell(item)
-    @vendors.select{ |vendor| vendor.inventory.has_key?(item) }
+    @vendors.select{ |vendor| vendor.inventory.has_key?(item) && vendor.check_stock(item) != 0 }
   end
 end
