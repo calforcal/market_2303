@@ -9,8 +9,8 @@ RSpec.describe Market do
     @vendor1 = Vendor.new("Rocky Mountain Fresh")
     @vendor2 = vendor2 = Vendor.new("Ba-Nom-a-Nom")
     @vendor3 = Vendor.new("Palisade Peach Shack")
-    @item1 = Item.new({name: 'Peach', price: "$0.75"})
-    @item2 = Item.new({name: 'Tomato', price: '$0.50'})
+    @item1 = Item.new({name: "Peach", price: "$0.75"})
+    @item2 = Item.new({name: "Tomato", price: '$0.50'})
     @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
     @item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
     @vendor1.stock(@item1, 35)
@@ -56,9 +56,23 @@ RSpec.describe Market do
       @market.add_vendor(@vendor1)
       @market.add_vendor(@vendor2)
       @market.add_vendor(@vendor3)
-      
+
       expect(@market.vendors_that_sell(@item1))
       expect(@market.vendors_that_sell(@item4))
     end
   end
+
+  describe "#sorted_item_list" do
+    it "can return an alphabetical list of in-stock items, no repeats" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sorted_item_list).to eq(["Banana Nice Cream", "Peach", "Peach-Raspberry Nice Cream", "Tomato"])
+    end
+  end
+
+  # describe "#total_inventory" do
+  #   it "can return "
+  # end
 end
