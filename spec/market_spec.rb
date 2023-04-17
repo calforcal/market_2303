@@ -98,4 +98,14 @@ RSpec.describe Market do
       })
     end
   end
+
+  describe "overstocked_items" do
+    it "returns an array of Item Objects sold my more than 1 vendor AND if quantity greater than 50" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.overstocked_items).to eq([@item1])
+    end
+  end
 end
