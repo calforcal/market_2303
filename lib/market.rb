@@ -41,4 +41,15 @@ class Market
     vendors = vendors_that_sell(item)
     count = vendors.map { |vendor| vendor.check_stock(item) }.sum
   end
+
+  def overstocked_items
+    inventory = total_inventory
+    overstocked_items = []
+
+    overstocked = inventory.find_all do |key, value|
+      value[:quantity] > 50 && value[:vendors].count > 1
+    end.flatten
+
+    overstocked_items << overstocked.first
+  end
 end
