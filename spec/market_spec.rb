@@ -1,10 +1,12 @@
 require 'rspec'
+require "date"
 require './lib/item'
 require './lib/vendor'
 require './lib/market'
 
 RSpec.describe Market do
   before(:each) do
+    allow(Date).to receive(:today).and_return(Date.new(2023,04,01))
     @market = Market.new("South Pearl Street Farmers Market") 
     @vendor1 = Vendor.new("Rocky Mountain Fresh")
     @vendor2 = vendor2 = Vendor.new("Ba-Nom-a-Nom")
@@ -28,6 +30,7 @@ RSpec.describe Market do
     it "can initialize with attributes" do
       expect(@market.name).to eq("South Pearl Street Farmers Market")
       expect(@market.vendors).to eq([])
+      expect(@market.date).to eq "01/04/2023"
     end
   end
 
@@ -106,6 +109,27 @@ RSpec.describe Market do
       @market.add_vendor(@vendor3)
 
       expect(@market.overstocked_items).to eq([@item1])
+    end
+  end
+
+  describe "#date" do
+    it "can call the date of when a market was created" do
+
+    end
+  end
+
+  describe "#sell" do
+    it "can sell items" do
+      @market.add_vendor(@vendor1)
+      @market.add_vendor(@vendor2)
+      @market.add_vendor(@vendor3)
+
+      expect(@market.sell(@item1, 200)).to be false
+      expect(@vendor1.check_stock(@item1)).to eq 35
+      
+      expect(@market.sell(@item1, 65)).to be true
+      expect(@vendor1.check_stock(@item1)).to eq 0
+      expect(@vendor3.check_stock(@item1)).to eq 35
     end
   end
 end
